@@ -1,0 +1,123 @@
+{
+   "desc":"OK",
+   "code":200,
+   "extra":"",
+   "data":{
+      "userId":"YZF",
+      "userName":"마르코",
+      "userImage":"http://t1.daumcdn.net/brunch/service/user/YZF/image/zZsrMSsj-bXgTPdgHnyGBoT0p7g.jpg",
+      "profileId":"imagineer",
+      "profileImage":null,
+      "description":"자유로운 삶을 만들어 나가는 사업가, 개발자, 그리고 애처가 bit.ly/facebook-marco bit.ly/marco-tv",
+      "createTime":1450851214000,
+      "status":"verify",
+      "articleCount":271,
+      "socialUser":false,
+      "writerCount":437,
+      "followerCount":10265,
+      "magazineCount":12,
+      "company":"",
+      "descriptionDetail":"싱가폴에서 일하는 데이터 엔지니어",
+      "profileNotiExpireTime":1562148957000,
+      "userSns":{
+         "userId":"YZF",
+         "website":"https://www.imagineer.io/",
+         "facebook":"marcosdeseul/",
+         "twitter":null,
+         "instagram":"marco_casado_con_la_mas_guapa/",
+         "createTime":1532610001000,
+         "updateTime":1546419392000
+      },
+      "bookStoreBookList":[
+         {
+            "no":1246,
+            "section":"default",
+            "title":"인문학도, 개발자되다",
+            "userId":"YZF",
+            "profileId":null,
+            "author":null,
+            "pcLink":"http://www.yes24.com/Cooperate/Yes24Gateway.aspx?pid=234015&amp;ReturnURL=http://www.yes24.com/24/Goods/67015072",
+            "mobileLink":"http://m.yes24.com/Goods/Detail/67015072?pid=234015",
+            "publisherName":"영진닷컴",
+            "publisherLink":"",
+            "description":"역사학도에서 개발자로 5년 간의 여정을 기록한 이야기입니다. 개발을 통해서 스타트업, 프리랜싱, 개인사업까지 경험하고, 현재는 싱가폴에서 데이터 엔지니어로 일하고 있습니다. 인문학도가 개발자 된 이야기 들어보실래요?",
+            "sentence":"쉽지 않았지만 후회하지 않는 나의 도전은, 여전히 현재 진행형이다.",
+            "interviewLink":null,
+            "publishTime":1543503600000,
+            "saveTime":1546390214000,
+            "coverImage":"http://t1.daumcdn.net/lbook/image/4812949",
+            "awardEpisode":0,
+            "awardGrade":"0",
+            "emphasize":0,
+            "podNo":0,
+            "magazineNo":0,
+            "writerName":"마르코",
+            "daumBookId":"4812949"
+         }
+      ],
+      "profileCategoryList":[
+         {
+            "category":"subject",
+            "categoryNo":1,
+            "categoryName":"주제",
+            "keywordList":[
+               {
+                  "no":56,
+                  "keyword":"취업",
+                  "frequency":null,
+                  "sequence":0,
+                  "keywordNo":3078
+               },
+               {
+                  "no":60,
+                  "keyword":"해외생활",
+                  "frequency":null,
+                  "sequence":1,
+                  "keywordNo":3533
+               },
+               {
+                  "no":25,
+                  "keyword":"사랑",
+                  "frequency":null,
+                  "sequence":2,
+                  "keywordNo":1665
+               }
+            ]
+         },
+         {
+            "category":"job",
+            "categoryNo":2,
+            "categoryName":"직업",
+            "keywordList":[
+               {
+                  "no":68,
+                  "keyword":"개발자",
+                  "frequency":null,
+                  "sequence":0,
+                  "keywordNo":523
+               }
+            ]
+         }
+      ],
+      "mainProduct":null,
+      "acceptPropose":true,
+      "articleViewType":"IMAGE",
+      "brunchActivityList":[
+         {
+            "type":"BRUNCHBOOK_WEEKLY",
+            "title":"2018년 1월 브런치 추천 작품 선정",
+            "subTitle":"문과 출신 개발자의 싱가폴 취업기",
+            "url":"https://brunch.co.kr/brunchbook/workingabroad"
+         },
+         {
+            "type":"BRUNCHBOOK",
+            "title":"브런치북 프로젝트 #2 은상 수상",
+            "subTitle":"출퇴근 없는 삶",
+            "url":"/magazine/work"
+         }
+      ],
+      "emailValidation":true,
+      "author":true,
+      "restrictTime":null
+   }
+}
