@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	profileID       string
-	userID          string
-	listSize        uint8
+	profileID string
+	userID    string
+	listSize  uint8
+
 	urlProfile      string
 	urlArticle      string
 	urlMagazine     string
@@ -22,16 +23,19 @@ var (
 )
 
 func init() {
+	const (
+		DOMAIN string = "https://api.brunch.co.kr/"
+		V1     string = "v1"
+		V2     string = "v1"
+		V3     string = "v1"
+	)
+
 	profileID = "imagineer"
 	listSize = 100
-	v1 := "v1"
-	v2 := "v2"
-	v3 := "v3"
-	domain := "https://api.brunch.co.kr/"
-	urlProfile = fmt.Sprintf("%s/%s/profile/@%s", domain, v1, profileID)
-	urlArticle = fmt.Sprintf("%s/%s/article/@%s", domain, v2, profileID)
-	urlMagazine = fmt.Sprintf("%s/%s/magazine/@%s", domain, v3, profileID)
-	urlSubscription = fmt.Sprintf("%s/%s/subscription/", domain, v2)
+	urlProfile = fmt.Sprintf("%s/%s/profile/@%s", DOMAIN, V1, profileID)
+	urlArticle = fmt.Sprintf("%s/%s/article/@%s", DOMAIN, V2, profileID)
+	urlMagazine = fmt.Sprintf("%s/%s/magazine/@%s", DOMAIN, V3, profileID)
+	urlSubscription = fmt.Sprintf("%s/%s/subscription/", DOMAIN, V2)
 
 	profileData, _ := http.GetData(urlProfile)
 	profile = profileData
