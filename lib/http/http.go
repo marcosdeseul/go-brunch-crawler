@@ -1,4 +1,4 @@
-package main
+package http
 
 import (
 	"encoding/json"
@@ -6,6 +6,11 @@ import (
 	"io/ioutil"
 	"net/http"
 )
+
+func GetData(url string) map[string]interface{} {
+	body := getBody(url)
+	return extractData(body)
+}
 
 func getBody(url string) []byte {
 	resp, err := http.Get(url)
@@ -15,12 +20,6 @@ func getBody(url string) []byte {
 	}
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
-}
-
-func getData(url string, username string) map[string]interface{} {
-	formattedURL := fmt.Sprintf("%s@%s", url, username)
-	body := getBody(formattedURL)
-	return extractData(body)
 }
 
 func getDataWithLastTime(url string, username string, lastTime string) map[string]interface{} {

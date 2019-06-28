@@ -1,11 +1,11 @@
-package main
+package util
 
 import (
 	"encoding/json"
 	"fmt"
 )
 
-func prettyPrint(data map[string]interface{}) {
+func PrettyPrint(data map[string]interface{}) {
 	prettier, _ := json.MarshalIndent(data, "", "  ")
 	fmt.Println(string(prettier))
 }
