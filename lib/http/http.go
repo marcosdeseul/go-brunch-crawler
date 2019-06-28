@@ -5,27 +5,40 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
-func GetData(url string) map[string]interface{} {
-	body := getBody(url)
-	return extractData(body)
+func GetData(url string) (map[string]interface{}, error) {
+	return getDataWithRetry(url, 5)
 }
 
-func getBody(url string) []byte {
-	resp, err := http.Get(url)
-	// TODO: handle error here
-	if err == nil {
-		defer resp.Body.Close()
+func getDataWithRetry(url string, retry int8) (map[string]interface{}, error) {
+	body, err := getBody(url, retry)
+	return extractData(body), err
+}
+
+func getBody(url string, retry int8) ([]byte, error) {
+	if retry < 0 {
+		return nil, fmt.Errorf("Out of retries")
 	}
-	body, _ := ioutil.ReadAll(resp.Body)
-	return body
+	resp, err := http.Get(url)
+	if err != nil {
+		time.Sleep(1 * time.Millisecond)
+		return getBody(url, retry-1)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		time.Sleep(1 * time.Millisecond)
+		return getBody(url, retry-1)
+	}
+	return body, nil
 }
 
-func getDataWithLastTime(url string, username string, lastTime string) map[string]interface{} {
+func getDataWithLastTime(url string, username string, lastTime string, retry int8) (map[string]interface{}, error) {
 	formattedURL := fmt.Sprintf("%s@%s?lastTime=%s", url, username, lastTime)
-	body := getBody(formattedURL)
-	return extractData(body)
+	body, err := getBody(formattedURL, retry)
+	return extractData(body), err
 }
 
 func extractData(body []byte) map[string]interface{} {

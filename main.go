@@ -17,6 +17,8 @@ var (
 	urlSubscription string // base of writers, followers
 	urlWriters      string
 	urlFollowers    string
+
+	profile map[string]interface{}
 )
 
 func init() {
@@ -31,17 +33,18 @@ func init() {
 	urlMagazine = fmt.Sprintf("%s/%s/magazine/@%s", domain, v3, profileID)
 	urlSubscription = fmt.Sprintf("%s/%s/subscription/", domain, v2)
 
-	profile := http.GetData(urlProfile)
+	profileData, _ := http.GetData(urlProfile)
+	profile = profileData
 	userID = fmt.Sprintf("%v", profile["userId"])
 	urlWriters = fmt.Sprintf("%s"+"user/@@%s/writers?listSize=%d", urlSubscription, userID, listSize)
 	urlFollowers = fmt.Sprintf("%s"+"user/@@%s/followers?listSize=%d", urlSubscription, userID, listSize)
 }
 
 func main() {
-	article := http.GetData(urlArticle)
-	magazine := http.GetData(urlMagazine)
-	writers := http.GetData(urlWriters)
-	followers := http.GetData(urlFollowers)
+	article, _ := http.GetData(urlArticle)
+	magazine, _ := http.GetData(urlMagazine)
+	writers, _ := http.GetData(urlWriters)
+	followers, _ := http.GetData(urlFollowers)
 	util.PrettyPrint(article)
 	util.PrettyPrint(magazine)
 	util.PrettyPrint(writers)
