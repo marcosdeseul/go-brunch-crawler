@@ -30,8 +30,11 @@ func prettyPrint(data map[string]interface{}) {
 }
 
 func getBody(url string) []byte {
-	resp, _ := http.Get(url)
-	defer resp.Body.Close()
+	resp, err := http.Get(url)
+	// TODO: handle error here
+	if err == nil {
+		defer resp.Body.Close()
+	}
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
 }
