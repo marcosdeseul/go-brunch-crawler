@@ -6,10 +6,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
 )
 
-func GetData(url string) (map[string]interface{}, error) {
-	return getDataWithRetry(url, 5)
+func GetData(url t.URL) (map[string]interface{}, error) {
+	return getDataWithRetry(string(url), 5)
 }
 
 func getDataWithRetry(url string, retry int8) (map[string]interface{}, error) {
@@ -21,7 +23,7 @@ func getBody(url string, retry int8) ([]byte, error) {
 	if retry < 0 {
 		return nil, fmt.Errorf("Out of retries")
 	}
-	resp, err := http.Get(url)
+	resp, err := http.Get(string(url))
 	if err != nil {
 		time.Sleep(1 * time.Millisecond)
 		return getBody(url, retry-1)

@@ -4,44 +4,39 @@ import (
 	"fmt"
 
 	"github.com/marcosdeseul/go-brunch-crawler/lib/http"
-	"github.com/marcosdeseul/go-brunch-crawler/lib/util"
+	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
+	"github.com/marcosdeseul/go-brunch-crawler/lib/url"
+	u "github.com/marcosdeseul/go-brunch-crawler/lib/util"
 )
 
 var (
-	profileID string
-	userID    string
+	profileID t.ProfileID
+	userID    t.UserID
 	listSize  uint8
 
-	urlProfile      string
-	urlArticle      string
-	urlMagazine     string
-	urlSubscription string // base of writers, followers
-	urlWriters      string
-	urlFollowers    string
+	urlProfile      t.URL
+	urlArticle      t.URL
+	urlMagazine     t.URL
+	urlSubscription t.URL // base of writers, followers
+	urlWriters      t.URL
+	urlFollowers    t.URL
 
 	profile map[string]interface{}
 )
 
 func init() {
-	const (
-		DOMAIN string = "https://api.brunch.co.kr/"
-		V1     string = "v1"
-		V2     string = "v1"
-		V3     string = "v1"
-	)
-
 	profileID = "imagineer"
 	listSize = 100
-	urlProfile = fmt.Sprintf("%s/%s/profile/@%s", DOMAIN, V1, profileID)
-	urlArticle = fmt.Sprintf("%s/%s/article/@%s", DOMAIN, V2, profileID)
-	urlMagazine = fmt.Sprintf("%s/%s/magazine/@%s", DOMAIN, V3, profileID)
-	urlSubscription = fmt.Sprintf("%s/%s/subscription/", DOMAIN, V2)
+	urlProfile = url.Profile(profileID)
+	urlArticle = url.Article(profileID)
+	urlMagazine = url.Magazine(profileID)
+	urlSubscription = url.Subscription()
 
 	profileData, _ := http.GetData(urlProfile)
 	profile = profileData
-	userID = fmt.Sprintf("%v", profile["userId"])
-	urlWriters = fmt.Sprintf("%s"+"user/@@%s/writers?listSize=%d", urlSubscription, userID, listSize)
-	urlFollowers = fmt.Sprintf("%s"+"user/@@%s/followers?listSize=%d", urlSubscription, userID, listSize)
+	userID = t.UserID(fmt.Sprintf("%v", profile["userId"]))
+	urlWriters = url.Writers(userID, 20)
+	urlFollowers = url.Followers(userID, 20)
 }
 
 func main() {
@@ -49,8 +44,8 @@ func main() {
 	magazine, _ := http.GetData(urlMagazine)
 	writers, _ := http.GetData(urlWriters)
 	followers, _ := http.GetData(urlFollowers)
-	util.PrettyPrint(article)
-	util.PrettyPrint(magazine)
-	util.PrettyPrint(writers)
-	util.PrettyPrint(followers)
+	u.PrettyPrint(article)
+	u.PrettyPrint(magazine)
+	u.PrettyPrint(writers)
+	u.PrettyPrint(followers)
 }
