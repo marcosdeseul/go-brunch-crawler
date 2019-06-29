@@ -5,7 +5,11 @@ import (
 	"fmt"
 )
 
-func PrettyPrint(data map[string]interface{}) {
+func PrettyPrintMap(data map[string]interface{}) {
 	prettier, _ := json.MarshalIndent(data, "", "  ")
 	fmt.Println(string(prettier))
+}
+
+func PrettyPrintStruct(data interface{}) {
+	fmt.Printf("%#v", data)
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/marcosdeseul/go-brunch-crawler/lib/http"
 	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
 	"github.com/marcosdeseul/go-brunch-crawler/lib/url"
-	u "github.com/marcosdeseul/go-brunch-crawler/lib/util"
 )
 
 var (
@@ -14,12 +13,11 @@ var (
 	userID    t.UserID
 	listSize  uint8
 
-	urlProfile      t.URL
-	urlArticle      t.URL
-	urlMagazine     t.URL
-	urlSubscription t.URL // base of writers, followers
-	urlWriters      t.URL
-	urlFollowers    t.URL
+	urlProfile   t.URL
+	urlArticle   t.URL
+	urlMagazine  t.URL
+	urlWriters   t.URL
+	urlFollowers t.URL
 
 	profile map[string]interface{}
 )
@@ -30,7 +28,6 @@ func init() {
 	urlProfile = url.Profile(profileID)
 	urlArticle = url.Article(profileID)
 	urlMagazine = url.Magazine(profileID)
-	urlSubscription = url.Subscription()
 
 	profileData, _ := http.GetData(urlProfile)
 	profile = profileData
@@ -40,12 +37,5 @@ func init() {
 }
 
 func main() {
-	article, _ := http.GetData(urlArticle)
-	magazine, _ := http.GetData(urlMagazine)
-	writers, _ := http.GetData(urlWriters)
-	followers, _ := http.GetData(urlFollowers)
-	u.PrettyPrint(article)
-	u.PrettyPrint(magazine)
-	u.PrettyPrint(writers)
-	u.PrettyPrint(followers)
+	// articles, _ := task.GetArticles(urlArticle)
 }
