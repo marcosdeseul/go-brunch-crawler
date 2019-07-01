@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"time"
 
 	"github.com/gocarina/gocsv"
 	"github.com/marcosdeseul/go-brunch-crawler/lib/http"
@@ -32,17 +33,23 @@ type Article struct {
 	PublishTime           int64  `json:"publishTime" csv:"publishTime"`
 }
 
+func urlArticleWithLastTime(url t.URL, time int64) t.URL {
+	return t.URL(fmt.Sprintf("%s?lastTime=%d", string(url), time))
+}
+
 func fetchArticles(url t.URL) ([]Article, error) {
-	first, _ := http.GetData(url)
+	now := int64(time.Now().Unix() * 1000)
+	first, _ := http.GetData(urlArticleWithLastTime(url, now))
 	var data DataArticle
 	marshalled, _ := json.Marshal(first)
 	json.Unmarshal(marshalled, &data)
-	results := data.List
+	results := []Article{}
+	results = append(results, data.List...)
 	end := data.MoreList
 	for end {
 		last := results[len(results)-1]
 		publishedAt := last.PublishTime
-		next, _ := http.GetData(t.URL(fmt.Sprintf("%s?lastTime=%d", string(url), publishedAt)))
+		next, _ := http.GetData(urlArticleWithLastTime(url, publishedAt))
 		marshalled, _ := json.Marshal(next)
 		json.Unmarshal(marshalled, &data)
 		results = append(results, data.List...)
