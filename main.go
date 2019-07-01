@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/marcosdeseul/go-brunch-crawler/lib/http"
 	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
 	"github.com/marcosdeseul/go-brunch-crawler/lib/url"
+	"github.com/marcosdeseul/go-brunch-crawler/task"
 )
 
 var (
@@ -19,7 +19,7 @@ var (
 	urlWriters   t.URL
 	urlFollowers t.URL
 
-	profile map[string]interface{}
+	profile task.DataProfile
 )
 
 func init() {
@@ -29,13 +29,12 @@ func init() {
 	urlArticle = url.Article(profileID)
 	urlMagazine = url.Magazine(profileID)
 
-	profileData, _ := http.GetData(urlProfile)
-	profile = profileData
-	userID = t.UserID(fmt.Sprintf("%v", profile["userId"]))
+	profile, _ = task.CrawlProfile(profileID, urlProfile)
+	userID = t.UserID(fmt.Sprintf("%v", profile.UserID))
 	urlWriters = url.Writers(userID, 20)
 	urlFollowers = url.Followers(userID, 20)
 }
 
 func main() {
-	// articles, _ := task.GetArticles(urlArticle)
+	task.CrawlArticle(profileID, urlArticle)
 }
