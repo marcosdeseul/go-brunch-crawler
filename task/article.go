@@ -70,12 +70,12 @@ func CrawlArticle(profileID t.ProfileID, url t.URL) ([]Article, error) {
 	found, fileName := checkTodayArticle(profileID)
 	var articles []Article
 	if found {
-		fmt.Printf("Today's Article file is found for [%s]\n", profileID)
+		fmt.Printf("Today's [Article] file is found for [%s]\n", profileID)
 		csvFile, _ := os.Open(fileName)
 		defer csvFile.Close()
 		gocsv.Unmarshal(csvFile, &articles)
 	} else {
-		fmt.Printf("There is no Article file found for [%s]\n", profileID)
+		fmt.Printf("There is no [Article] file found for [%s]\n", profileID)
 		newpath := filepath.Join(".", "output")
 		os.MkdirAll(newpath, os.ModePerm)
 		articles, _ = fetchArticles(url)

@@ -39,6 +39,7 @@ func CrawlProfile(profileID t.ProfileID, url t.URL) (DataProfile, error) {
 	return profile, nil
 }
 
+// DataProfile is the entry point of all profile related data
 type DataProfile struct {
 	UserID                string                `json:"userId"`
 	UserName              string                `json:"userName"`
