@@ -46,6 +46,6 @@ func getDataWithLastTime(url string, username string, lastTime string, retry int
 func extractData(body []byte) map[string]interface{} {
 	var result map[string]interface{}
 	json.Unmarshal([]byte(body), &result)
-	data := result["data"].(map[string]interface{})
+	data, _ := result["data"].(map[string]interface{})
 	return data
 }

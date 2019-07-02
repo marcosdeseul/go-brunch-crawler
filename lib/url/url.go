@@ -8,10 +8,10 @@ import (
 
 // url related consts
 const (
-	DOMAIN       string = "https://api.brunch.co.kr/"
+	DOMAIN       string = "https://api.brunch.co.kr"
 	V1           string = "v1"
-	V2           string = "v1"
-	V3           string = "v1"
+	V2           string = "v2"
+	V3           string = "v3"
 	PROFILE      string = "profile"
 	ARTICLE      string = "article"
 	MAGAZINE     string = "magazine"
@@ -66,23 +66,13 @@ func Magazine(profileID t.ProfileID) t.URL {
 	return info.build()
 }
 
-// Subscription return a complete url
-func Subscription() t.URL {
-	var info urlGenerator = urlInfo{
-		Domain:  DOMAIN,
-		Version: V2,
-		Target:  SUBSCRIPTION,
-	}
-	return info.build()
-}
-
 // Writers return a complete url
 func Writers(userID t.UserID, listSize int8) t.URL {
 	var info urlGenerator = urlInfo{
 		Domain:  DOMAIN,
 		Version: V2,
 		Target:  SUBSCRIPTION,
-		Extra:   "",
+		Extra:   fmt.Sprintf("/user/@@%s/writers?listSize=%d", userID, listSize),
 	}
 	return info.build()
 }
@@ -93,7 +83,7 @@ func Followers(userID t.UserID, listSize int8) t.URL {
 		Domain:  DOMAIN,
 		Version: V2,
 		Target:  SUBSCRIPTION,
-		Extra:   "",
+		Extra:   fmt.Sprintf("/user/@@%s/followers?listSize=%d", userID, listSize),
 	}
 	return info.build()
 }

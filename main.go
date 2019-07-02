@@ -38,4 +38,5 @@ func init() {
 func main() {
 	task.CrawlArticle(profileID, urlArticle)
 	task.CrawlMagazine(profileID, urlMagazine)
+	task.CrawlWriter(profileID, urlWriters)
 }
