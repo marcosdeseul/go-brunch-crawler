@@ -14,12 +14,12 @@ func GetData(url t.URL) (map[string]interface{}, error) {
 	return getDataWithRetry(string(url), 5)
 }
 
-func getDataWithRetry(url string, retry int8) (map[string]interface{}, error) {
+func getDataWithRetry(url string, retry uint8) (map[string]interface{}, error) {
 	body, err := getBody(url, retry)
 	return extractData(body), err
 }
 
-func getBody(url string, retry int8) ([]byte, error) {
+func getBody(url string, retry uint8) ([]byte, error) {
 	if retry < 0 {
 		return nil, fmt.Errorf("Out of retries")
 	}
@@ -37,7 +37,7 @@ func getBody(url string, retry int8) ([]byte, error) {
 	return body, nil
 }
 
-func getDataWithLastTime(url string, username string, lastTime string, retry int8) (map[string]interface{}, error) {
+func getDataWithLastTime(url string, username string, lastTime string, retry uint8) (map[string]interface{}, error) {
 	formattedURL := fmt.Sprintf("%s@%s?lastTime=%s", url, username, lastTime)
 	body, err := getBody(formattedURL, retry)
 	return extractData(body), err

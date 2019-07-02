@@ -22,23 +22,23 @@ type DataArticle struct {
 
 // Article is a struct to describe article data
 type Article struct {
-	No                    int16  `json:"no" csv:"no"`
+	No                    uint16 `json:"no" csv:"no"`
 	Title                 string `json:"title" csv:"title"`
-	LikeCount             int16  `json:"likeCount" csv:"like"`
-	CommentCount          int16  `json:"commentCount" csv:"comment"`
-	SocialShareTotalCount int16  `json:"socialShareTotalCount" csv:"socialShareTotal"`
-	ReadSeconds           int16  `json:"readSeconds" csv:"readSeconds"`
-	CreateTime            int64  `json:"createTime" csv:"createTime"`
-	UpdateTime            int64  `json:"updateTime" csv:"updateTime"`
-	PublishTime           int64  `json:"publishTime" csv:"publishTime"`
+	LikeCount             uint16 `json:"likeCount" csv:"like"`
+	CommentCount          uint16 `json:"commentCount" csv:"comment"`
+	SocialShareTotalCount uint16 `json:"socialShareTotalCount" csv:"socialShareTotal"`
+	ReadSeconds           uint16 `json:"readSeconds" csv:"readSeconds"`
+	CreateTime            uint64 `json:"createTime" csv:"createTime"`
+	UpdateTime            uint64 `json:"updateTime" csv:"updateTime"`
+	PublishTime           uint64 `json:"publishTime" csv:"publishTime"`
 }
 
-func urlArticleWithLastTime(url t.URL, time int64) t.URL {
+func urlArticleWithLastTime(url t.URL, time uint64) t.URL {
 	return t.URL(fmt.Sprintf("%s?lastTime=%d", string(url), time))
 }
 
 func fetchArticles(url t.URL) ([]Article, error) {
-	now := int64(time.Now().Unix() * 1000)
+	now := uint64(time.Now().Unix() * 1000)
 	first, _ := http.GetData(urlArticleWithLastTime(url, now))
 	var data DataArticle
 	marshalled, _ := json.Marshal(first)

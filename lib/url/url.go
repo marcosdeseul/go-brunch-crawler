@@ -67,7 +67,7 @@ func Magazine(profileID t.ProfileID) t.URL {
 }
 
 // Writers return a complete url
-func Writers(userID t.UserID, listSize int8) t.URL {
+func Writers(userID t.UserID, listSize uint) t.URL {
 	var info urlGenerator = urlInfo{
 		Domain:  DOMAIN,
 		Version: V2,
@@ -78,7 +78,7 @@ func Writers(userID t.UserID, listSize int8) t.URL {
 }
 
 // Followers return a complete url
-func Followers(userID t.UserID, listSize int8) t.URL {
+func Followers(userID t.UserID, listSize uint) t.URL {
 	var info urlGenerator = urlInfo{
 		Domain:  DOMAIN,
 		Version: V2,

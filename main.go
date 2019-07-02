@@ -11,7 +11,7 @@ import (
 var (
 	profileID t.ProfileID
 	userID    t.UserID
-	listSize  uint8
+	listSize  uint
 
 	urlProfile   t.URL
 	urlArticle   t.URL
@@ -32,11 +32,12 @@ func init() {
 	profile, _ = task.CrawlProfile(profileID, urlProfile)
 	userID = t.UserID(fmt.Sprintf("%v", profile.UserID))
 	urlWriters = url.Writers(userID, 20)
-	urlFollowers = url.Followers(userID, 20)
+	urlFollowers = url.Followers(userID, 200)
 }
 
 func main() {
 	task.CrawlArticle(profileID, urlArticle)
 	task.CrawlMagazine(profileID, urlMagazine)
 	task.CrawlWriter(profileID, urlWriters)
+	task.CrawlFollower(profileID, urlFollowers)
 }

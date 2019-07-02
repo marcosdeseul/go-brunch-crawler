@@ -12,23 +12,23 @@ import (
 	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
 )
 
-func urlWriterWithSubscribeNo(url t.URL, subscribeNo int) t.URL {
+func urlFollowerWithSubscribeNo(url t.URL, subscribeNo int) t.URL {
 	return t.URL(fmt.Sprintf("%s&subscribeNo=%d", string(url), subscribeNo))
 }
 
-func fetchWriters(url t.URL) ([]Writer, error) {
+func fetchFollowers(url t.URL) ([]Follower, error) {
 	first, _ := http.GetData(url)
-	var data DataWriter
+	var data DataFollower
 	marshalled, _ := json.Marshal(first)
 	json.Unmarshal(marshalled, &data)
-	results := []Writer{}
+	results := []Follower{}
 	results = append(results, data.List...)
 	end := data.MoreList
 	for end {
 		last := results[len(results)-1]
 		subscribeNo := last.SubscribeNo
 		fmt.Printf("subscribeNo: %d\n", subscribeNo)
-		next, _ := http.GetData(urlWriterWithSubscribeNo(url, subscribeNo))
+		next, _ := http.GetData(urlFollowerWithSubscribeNo(url, subscribeNo))
 		marshalled, _ := json.Marshal(next)
 		json.Unmarshal(marshalled, &data)
 		results = append(results, data.List...)
@@ -40,40 +40,40 @@ func fetchWriters(url t.URL) ([]Writer, error) {
 	return results, nil
 }
 
-func checkTodayWriter(profileID t.ProfileID) (bool, string) {
-	return checkTodayFile(profileID, "writer", "csv")
+func checkTodayFollower(profileID t.ProfileID) (bool, string) {
+	return checkTodayFile(profileID, "follower", "csv")
 }
 
-// CrawlWriter fetches data when there is no file, otherwise it creates a file after fetching
-func CrawlWriter(profileID t.ProfileID, url t.URL) ([]Writer, error) {
-	found, fileName := checkTodayWriter(profileID)
-	var writers []Writer
+// CrawlFollower fetches data when there is no file, otherwise it creates a file after fetching
+func CrawlFollower(profileID t.ProfileID, url t.URL) ([]Follower, error) {
+	found, fileName := checkTodayFollower(profileID)
+	var followers []Follower
 	if found {
-		fmt.Printf("Today's [Writer] file is found for [%s]\n", profileID)
+		fmt.Printf("Today's [Follower] file is found for [%s]\n", profileID)
 		csvFile, _ := os.Open(fileName)
 		defer csvFile.Close()
-		gocsv.Unmarshal(csvFile, &writers)
+		gocsv.Unmarshal(csvFile, &followers)
 	} else {
-		fmt.Printf("There is no [Writer] file found for [%s]\n", profileID)
+		fmt.Printf("There is no [Follower] file found for [%s]\n", profileID)
 		newpath := filepath.Join(".", "output")
 		os.MkdirAll(newpath, os.ModePerm)
-		writers, _ = fetchWriters(url)
+		followers, _ = fetchFollowers(url)
 		file, err := os.Create(fileName)
 		if err != nil {
 			fmt.Printf("ERR: %s\n", err)
 		}
 		defer file.Close()
-		gocsv.Marshal(&writers, file)
+		gocsv.Marshal(&followers, file)
 	}
-	return writers, nil
+	return followers, nil
 }
 
-type DataWriter struct {
-	List       []Writer `json:"list"`
-	TotalCount int      `json:"totalCount"`
-	MoreList   bool     `json:"moreList"`
+type DataFollower struct {
+	List       []Follower `json:"list"`
+	TotalCount int        `json:"totalCount"`
+	MoreList   bool       `json:"moreList"`
 }
-type Writer struct {
+type Follower struct {
 	SubscribeNo   int    `json:"subscribeNo" csv:"subscribeNo"`
 	UserID        string `json:"userId" csv:"userId"`
 	UserName      string `json:"userName" csv:"userName"`
