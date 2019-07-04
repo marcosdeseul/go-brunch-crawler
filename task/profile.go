@@ -15,9 +15,10 @@ func checkTodayProfile(profileID t.ProfileID) (bool, string) {
 	return checkTodayFile(profileID, "profile", "json")
 }
 
-func CrawlProfile(profileID t.ProfileID, url t.URL) (DataProfile, error) {
+// CrawlProfile returns Profile from a http request or a csv file
+func CrawlProfile(profileID t.ProfileID, url t.URL) (Profile, error) {
 	found, fileName := checkTodayProfile(profileID)
-	var profile DataProfile
+	var profile Profile
 	if found {
 		fmt.Printf("Today's [Profile] file is found for [%s]\n", profileID)
 		file, _ := ioutil.ReadFile(fileName)
@@ -39,8 +40,8 @@ func CrawlProfile(profileID t.ProfileID, url t.URL) (DataProfile, error) {
 	return profile, nil
 }
 
-// DataProfile is the entry point of all profile related data
-type DataProfile struct {
+// Profile is the entry point of all profile related data
+type Profile struct {
 	UserID                string                `json:"userId"`
 	UserName              string                `json:"userName"`
 	ProfileID             string                `json:"profileId"`

@@ -1,43 +1,23 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/marcosdeseul/go-brunch-crawler/lib/t"
-	"github.com/marcosdeseul/go-brunch-crawler/lib/url"
-	"github.com/marcosdeseul/go-brunch-crawler/task"
+	w "github.com/marcosdeseul/go-brunch-crawler/task"
 )
 
-var (
-	profileID t.ProfileID
-	userID    t.UserID
-	listSize  uint
-
-	urlProfile   t.URL
-	urlArticle   t.URL
-	urlMagazine  t.URL
-	urlWriters   t.URL
-	urlFollowers t.URL
-
-	profile task.DataProfile
-)
+var profileID t.ProfileID
+var fields []w.UserField
 
 func init() {
 	profileID = "imagineer"
-	listSize = 100
-	urlProfile = url.Profile(profileID)
-	urlArticle = url.Article(profileID)
-	urlMagazine = url.Magazine(profileID)
-
-	profile, _ = task.CrawlProfile(profileID, urlProfile)
-	userID = t.UserID(fmt.Sprintf("%v", profile.UserID))
-	urlWriters = url.Writers(userID, 20)
-	urlFollowers = url.Followers(userID, 200)
+	fields = []w.UserField{
+		w.FieldArticle,
+		w.FieldMagazine,
+		w.FieldWriter,
+		w.FieldFollower,
+	}
 }
 
 func main() {
-	task.CrawlArticle(profileID, urlArticle)
-	task.CrawlMagazine(profileID, urlMagazine)
-	task.CrawlWriter(profileID, urlWriters)
-	task.CrawlFollower(profileID, urlFollowers)
+	w.GetUser(profileID, fields)
 }
